@@ -1,6 +1,8 @@
 - name: catalogue
   hosts: catalogue
   become: yes
+  vars_files:
+  - variables.yaml
   tasks:
   - name: disabling old nodejs and enable nodejs
     ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
@@ -55,3 +57,18 @@
     ansible.builtin.package:
       name:  mongodb-org-shell
       state: present
+
+  - name: get the catalogue categories count
+    ansible.builtin.command:  mongo --host {{mongodb}} --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+    register: product_count
+
+  - name: load catalogue data 
+    ansible.builtin.command: mongo --host {{mongodb}} < /app/schema/catalogue.js
+    when: product_count.stdout == 0
+
+  - name: start and enable catalogue
+    ansible.builtin.service:
+      name: catalogue
+      state: restarted
+      enabled: yes
+      
