@@ -52,6 +52,6 @@
       dest: /etc/yum.repos.d/mongodb.repo
 
    - name: install the mongodb client
-    ansible.builtin.package:
+     ansible.builtin.package:
       name: mongodb-org-shell
       state: present
