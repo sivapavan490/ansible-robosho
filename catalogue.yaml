@@ -35,23 +35,23 @@
     args:
       chdir: /app
 
-  - name: copy catalogue service
-    ansible.builtin.copy:
-      src: catalogue.service
-      dest: /etc/systemd/system/catalogue.service
+  # - name: copy catalogue service
+  #   ansible.builtin.copy:
+  #     src: catalogue.service
+  #     dest: /etc/systemd/system/catalogue.service
 
-  - name: daemopn reload and start
-    ansible.builtin.systemd_service:
-      daemon_reload: true
+  # - name: daemopn reload and start
+  #   ansible.builtin.systemd_service:
+  #     daemon_reload: true
 
-    # lets start after the data is loaded.
+  #   # lets start after the data is loaded.
 
-  - name: copy mongodb repo
-    ansible.builtin.copy:
-      src: mongodb.repo
-      dest: /etc/yum.repos.d/mongodb.repo
+  # - name: copy mongodb repo
+  #   ansible.builtin.copy:
+  #     src: mongodb.repo
+  #     dest: /etc/yum.repos.d/mongodb.repo
 
-   - name: install the mongodb client
-    ansible.builtin.package:
-      name: mongodb-org-shell
-      state: present
+  #  - name: install the mongodb client
+  #   ansible.builtin.package:
+  #     name: mongodb-org-shell
+  #     state: present
